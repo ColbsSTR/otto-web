@@ -226,7 +226,9 @@ function Metrics() {
             </div>
             <p className="mt-4 text-xs text-zinc-500">
               So “two reps left” stops being a feeling and becomes a number you&apos;ve
-              seen a hundred times — and every set after gets sharper.
+              seen a hundred times — and every set after gets sharper. It spends its
+              first few sessions learning your lifts, and wears its precision openly
+              (±6, then ±2) until it&apos;s earned your trust.
             </p>
           </div>
 
@@ -254,7 +256,8 @@ function Metrics() {
             <p className="mt-2 text-sm leading-relaxed text-zinc-400">
               No morning quiz, no wellness score. Otto compares your warmup-set bar speed
               against your own baseline for that exact lift — so by your last warmup set,
-              you know: PR day, or back-off day.
+              you know: PR day, or back-off day. And on the down mornings it says so,
+              in the same plain numbers — no cheerleading, no consolation prize.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <span className="rounded-full bg-white/[0.06] px-3 py-1.5 text-xs text-zinc-300 ring-1 ring-white/10">
@@ -408,7 +411,9 @@ function Progress() {
           <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-semibold text-white">Effort · this week</h3>
-              <span className="text-xs uppercase tracking-wider text-zinc-500">Friends</span>
+              <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-xs text-zinc-400 ring-1 ring-white/10">
+                Friends beta · after launch
+              </span>
             </div>
             <div className="mt-5 space-y-2">
               {board.map((row, i) => (
@@ -492,7 +497,14 @@ function Experience() {
                 Every other strength app makes you tap in each set by hand. Otto reads it
                 straight off your wrist — it knows which exercise you&apos;re doing, counts
                 your sets, and counts your reps automatically. The only thing it ever asks
-                is the weight, and the more you lift, the more it pre-fills that too.
+                is the weight: pre-filled from last time, fixed with one turn of the crown,
+                and when the guess is right you do nothing at all.
+              </p>
+              <p className="mt-3 text-zinc-400">
+                Anything it misreads, you fix in seconds that evening — and every fix
+                teaches it, so the asks get rarer every week. Full bar-speed metrics on
+                barbell lifts; dumbbells, machines, and bodyweight get sets, reps, and
+                effort — always labeled for what they are, never faked.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 md:justify-end">
@@ -547,6 +559,37 @@ function Experience() {
           </div>
           <div className="flex justify-center">
             <PhoneMockup />
+          </div>
+        </div>
+
+        {/* History + programs */}
+        <div className="mt-16 grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-400">
+              Your history, kept
+            </span>
+            <h3 className="mt-3 text-2xl font-semibold text-white">
+              A record you never wrote is still yours to read.
+            </h3>
+            <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+              Every session lands in a log you can actually browse — any lift, months
+              back: every set, every speed reading, every PR. Auto-tracked doesn&apos;t
+              mean locked away; it means the record was free.
+            </p>
+          </div>
+          <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8">
+            <span className="text-xs font-semibold uppercase tracking-widest text-brand-400">
+              Your program, as data
+            </span>
+            <h3 className="mt-3 text-2xl font-semibold text-white">
+              Bring your program. Otto keeps score against it.
+            </h3>
+            <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+              Run whatever plan you already believe in — or just repeat last week.
+              Otto pre-fills every set from it, shows planned-vs-actual as plain
+              deltas, and estimates the capacity you&apos;ve earned for next time.
+              You stay the coach; it keeps the books.
+            </p>
           </div>
         </div>
       </div>
