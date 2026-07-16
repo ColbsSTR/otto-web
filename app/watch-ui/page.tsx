@@ -1,9 +1,16 @@
 import { WatchLiveSet } from "../components/WatchJourneys";
+import { RackMomentLive } from "../components/RackMomentLive";
+import { TargetCloseLive } from "../components/TargetCloseLive";
+import { WarmupLive } from "../components/WarmupLive";
 import {
   InstrumentReadinessProfile,
+  InstrumentWarmupText,
+  InstrumentWarmupBars,
+  InstrumentWarmupDots,
   InstrumentVerdictZones,
-  InstrumentVerdictGauge,
-  InstrumentVerdictList,
+  InstrumentRackNearTarget,
+  InstrumentWeekAccount,
+  InstrumentTargetsEditor,
   InstrumentRest,
   InstrumentDone,
   PhoneInstrument,
@@ -30,7 +37,7 @@ const MOMENTS = [
   {
     phase: "Warmups",
     question: "“Am I on today?”",
-    glance: "Today's warmup dots on the lift's load–velocity baseline",
+    glance: "Bar speed vs your usual — faster or slower, said plainly",
     device: "Watch",
   },
   {
@@ -113,12 +120,12 @@ const PRINCIPLES = [
 const JOURNEY = [
   {
     phase: "Warmups",
-    note: "Today's warmups plotted live on this lift's load–velocity baseline — dots riding above the line are the readiness read, resolved before the first work set.",
-    el: <InstrumentReadinessProfile />,
+    note: "The answer as a sentence: Moving 4% faster than usual — typography is the interface, Activity-notification style. No trend widget: the sentence updates with every warm-up set. The footer is history, not prescription: last time's top set.",
+    el: <InstrumentWarmupText />,
   },
   {
     phase: "Rack moment",
-    note: "Effort in neutral white; the velocity-loss zone band underneath says what the set trained. Footer: last-set speed vs norm and the stimulus deposit. No clock — you're not resting yet.",
+    note: "Effort in neutral white inside a dial filled to the score, reps riding its gap; the fresh signals — speed vs norm and the stimulus deposit — stack beside it. The band beneath says what the set trained. No clock — you're not resting yet.",
     el: <InstrumentVerdictZones />,
   },
   {
@@ -229,67 +236,160 @@ export default function WatchUiPage() {
         size. The zone name is a classification, not a message; Effort goes neutral
         white and the zone carries the color.
       </p>
-      <div className="mt-6 grid gap-6 sm:grid-cols-3">
-        <div className="flex flex-col items-center rounded-3xl border border-brand-500/25 bg-white/[0.02] p-6">
+      <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div className="flex flex-col items-center rounded-3xl border border-brand-500/25 bg-white/[0.02] p-8">
           <InstrumentVerdictZones />
           <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-brand-300">
             Zones — selected
           </p>
           <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
-            Outcome as a position on a familiar band. Instantly readable, zero prose.
+            Outcome as a position on a familiar band — the landed zone carries its own
+            name, Apple HR-zone style. Instantly readable, zero prose.
           </p>
         </div>
-        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 opacity-70">
-          <div className="scale-90">
-            <InstrumentVerdictGauge />
-          </div>
-          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
-            Gauge — considered
+        <div className="flex flex-col items-center rounded-3xl border border-brand-500/25 bg-white/[0.02] p-8">
+          <RackMomentLive />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-brand-300">
+            The two beats — live
           </p>
-          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-600">
-            Strong 2-second read, but one threshold mark carries less than five named
-            zones.
-          </p>
-        </div>
-        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 opacity-70">
-          <div className="scale-90">
-            <InstrumentVerdictList />
-          </div>
-          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
-            List — considered
-          </p>
-          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-600">
-            Most data per glance; the session curve moves to the phone instead.
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            The verdict sweeps in and the zone pill lands; then the deposit ticks up —
+            one haptic per point — while the day&apos;s total rolls 42 → 54, and the
+            label flashes the destination account. Loops every ~7s.
           </p>
         </div>
       </div>
 
-      {/* Warmups — load–velocity profile */}
-      <div className="mt-16 flex flex-col items-center gap-8 rounded-3xl border border-white/[0.08] bg-white/[0.02] p-8 md:flex-row">
-        <InstrumentReadinessProfile />
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-            Warmups · the readiness picture
+      {/* Weekly muscle targets — exploration (app home lives at /app-ui) */}
+      <h2 className="mt-16 text-xl font-semibold text-white">
+        Weekly muscle targets — an exploration
+      </h2>
+      <p className="mt-2 max-w-3xl text-sm text-zinc-400">
+        Not yet a decision — explored here: give every muscle a weekly stimulus target,
+        so each deposit has a destination and the week has a scoreboard. Set on the
+        phone (Otto suggests from your own 8-week average), chased on the watch, closed
+        with the one moment Otto breaks its instrument calm. Two rules keep it honest:
+        targets are earnings goals, never debt — a missed week simply resets, no red
+        states — and the takeover fires only on a close, Apple&apos;s own rule for
+        fireworks.
+      </p>
+      <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6">
+          <InstrumentRackNearTarget />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            1 · The approach
           </p>
-          <h2 className="mt-2 text-lg font-semibold text-white">
-            Today&apos;s dots on your load–velocity curve
-          </h2>
-          <div className="mt-2 max-w-xl space-y-3 text-sm leading-relaxed text-zinc-400">
-            <p>
-              Every lift has a signature: how fast the bar moves at each load. Otto
-              learns that curve from past sessions (the zinc line), and today&apos;s
-              warmups land on it as dots, one per set, as they happen. Dots riding
-              above the line mean faster than usual at that weight — the readiness
-              read as a picture, with the +4% average as the headline and the raw m/s
-              in the footer.
-            </p>
-            <p>
-              It degrades honestly: with no history there&apos;s no line, just
-              today&apos;s dots — and watching the baseline assemble over the first
-              few sessions communicates “it&apos;s learning your lift” better than any
-              onboarding copy could.
-            </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Goal-gradient on the selected screen: when a deposit brings an account
+            within one hard set of closing, the rail names the destination — “chest ·
+            12 left.” Anticipation as data.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-brand-500/25 bg-white/[0.02] p-6">
+          <TargetCloseLive />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-brand-300">
+            2 · The close — live
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            The only takeover in the system: the bar fills its last chunk, flips
+            emerald, the check draws in with a restrained burst and a distinct haptic.
+            ~2s, then back to the session.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6">
+          <InstrumentWeekAccount />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            3 · The week at a glance
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Every muscle&apos;s account on the watch: closed reads ✓, open states what&apos;s
+            left — never what was missed.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6">
+          <div className="scale-90">
+            <InstrumentTargetsEditor />
           </div>
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            4 · Setting them — phone
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Otto suggests each number from your own 8-week average; overriding is a
+            stepper, not a questionnaire. Provenance under every name.
+          </p>
+        </div>
+      </div>
+
+      {/* Warmups — made glanceable */}
+      <h2 className="mt-16 text-xl font-semibold text-white">
+        Warmups — made glanceable
+      </h2>
+      <p className="mt-2 max-w-3xl text-sm text-zinc-400">
+        The load–velocity curve failed the glance test with civilians: it slopes
+        downward (which reads as &ldquo;getting worse&rdquo; unless you know the
+        physics), and &ldquo;vs base&rdquo; / &ldquo;m/s&rdquo; are jargon. The
+        resolution isn&apos;t choosing between simple and technical — it&apos;s
+        sequencing them: <span className="text-zinc-200">the answer as a sentence
+        first, the evidence fading in three seconds later</span>, headline shrunk but
+        still standing. Same two-beat pattern as the rack moment.
+      </p>
+      <div className="mt-6 grid gap-6 sm:grid-cols-2">
+        <div className="flex flex-col items-center rounded-3xl border border-brand-500/25 bg-white/[0.02] p-6">
+          <WarmupLive />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-brand-300">
+            The two states — live
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Three seconds of the sentence, full size — then it compresses to a
+            one-line headline and today&apos;s dots land on the lift&apos;s usual
+            curve, staggered. The glance for everyone; the evidence for whoever&apos;s
+            still looking. Loops every ~8s.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6">
+          <InstrumentWarmupText />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            Plain words — the glance state
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            State one, static: the sentence is the screen, the key phrase wears the
+            readiness color, and it re-forms after every warm-up set. The footer
+            states what Otto actually knows: last time&apos;s top set, not a
+            predicted next one.
+          </p>
+        </div>
+      </div>
+      <div className="mt-6 grid gap-6 sm:grid-cols-3">
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 opacity-70">
+          <InstrumentReadinessProfile />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            The original — became the settle state
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            The technical screen that started this: its curve survives as state two of
+            the live version; the m/s footer stays on the phone&apos;s strength
+            detail.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 opacity-70">
+          <InstrumentWarmupBars />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Two bars — considered
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Today vs your usual bar speed, longer = faster. Readable with zero
+            vocabulary, but the sentence says it faster still.
+          </p>
+        </div>
+        <div className="flex flex-col items-center rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 opacity-70">
+          <InstrumentWarmupDots />
+          <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            Rising dots — considered
+          </p>
+          <p className="mt-2 max-w-xs text-center text-xs leading-relaxed text-zinc-500">
+            Readiness forming set by set with up = faster; superseded by the sentence
+            re-forming in time.
+          </p>
         </div>
       </div>
 
