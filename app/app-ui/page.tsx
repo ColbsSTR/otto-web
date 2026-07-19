@@ -1,7 +1,11 @@
-import { AppHomeScreen } from "../components/AppHome";
+import {
+  AppHomeScreen,
+  AppTargetsScreen,
+  AppStrengthScreen,
+} from "../components/AppHome";
 
 export const metadata = {
-  title: "App UI — the home screen — Otto",
+  title: "App UI — the tabs — Otto",
   robots: { index: false },
 };
 
@@ -25,23 +29,33 @@ const ANNOTATIONS = [
   },
   {
     n: "3",
+    title: "Muscle map — stimulus as heat",
+    body: "The week's stimulus made anatomical: every muscle tinted by how much it's banked toward its weekly target — full brand at a closed account (chest), faint where the week hasn't reached (quads, calves). The fastest possible answer to 'what needs work?'. Front/back toggle; tapping a muscle opens its account.",
+  },
+  {
+    n: "4",
     title: "Last session — the continuity door",
     body: "One row: name, Load, sets, the PR. Tapping opens the full post-session summary. This is where 'how was today?' lives — the home doesn't restate it, it links it.",
   },
   {
-    n: "4",
+    n: "5",
     title: "Stimulus by day — the week's shape",
     body: "Seven bars, rest days as visible stubs (a rest day is data, not absence), today bright. The Whoop-trend instinct: the rhythm of the week at a glance, and whether the remaining days need to carry weight.",
   },
   {
-    n: "5",
+    n: "6",
+    title: "Leaderboard — stimulus accumulated",
+    body: "The one social surface: friends ranked by stimulus banked this week — work done, not weight lifted, so a beginner and a veteran share one board honestly. It inherits the landing page's old leaderboard idea, upgraded to the earnings metric.",
+  },
+  {
+    n: "7",
     title: "Strength — the payoff",
     body: "Est. 1RM per lift, derived from bar speed, with the 8-week spark and delta. This is the 'is it working?' answer — proof of progress before the PR ever happens, sitting quietly at the bottom because it changes on the scale of months, not days.",
   },
   {
     n: "—",
     title: "What's deliberately absent",
-    body: "Readiness — it resolves during warmups, so the home screen doesn't pretend to know it. No greeting, no streaks, no score adjectives, no coaching sentence. Every card is a door; the raw layers live one tap deeper. The weekly-targets detail moved behind the hero card's chevron — the ring already carries the week's headline.",
+    body: "Readiness — it resolves during warmups, so the home screen doesn't pretend to know it. No greeting, no streaks, no score adjectives, no coaching sentence. Every card is a door; the raw layers live one tap deeper. The tab bar is real now — Home, Sessions, Strength, Targets — and the weekly-targets detail lives behind the hero card's chevron and the Targets tab.",
   },
 ];
 
@@ -52,37 +66,48 @@ export default function AppUiPage() {
         Internal · not linked
       </p>
       <h1 className="mt-3 text-3xl font-semibold tracking-tight text-white">
-        App UI — the home screen
+        App UI — the tabs
       </h1>
       <p className="mt-3 max-w-3xl text-zinc-400">
         What you open cold — rest day, pre-gym, or the evening after. A different job
         from the post-session summary: the summary answers &ldquo;how was today?&rdquo;;
-        the home answers{" "}
+        the app answers{" "}
         <span className="text-zinc-200">
           &ldquo;where am I in the week, and is it working?&rdquo;
         </span>{" "}
-        Data story continues from the watch: yesterday&apos;s Push Day, 446 banked this
-        week, 3 of 9 targets closed, bench trending +7%.
+        Each tab is one real viewport — no infinite home feed. Data story continues
+        from the watch: yesterday&apos;s Push Day, 446 banked this week, 3 of 9 targets
+        closed, bench trending +7%.
       </p>
 
-      <div className="mt-12 flex flex-col items-center gap-12 lg:flex-row lg:items-start">
-        <div className="lg:sticky lg:top-12">
-          <AppHomeScreen />
-        </div>
-        <div className="max-w-xl space-y-5">
-          {ANNOTATIONS.map((a) => (
-            <div
-              key={a.title}
-              className="rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6"
-            >
-              <h2 className="text-sm font-semibold text-white">
-                <span className="mr-2 text-brand-400">{a.n}</span>
-                {a.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-400">{a.body}</p>
-            </div>
-          ))}
-        </div>
+      <div className="mt-12 grid justify-items-center gap-10 md:grid-cols-3">
+        {[
+          { tab: "Home — the week's headline", el: <AppHomeScreen /> },
+          { tab: "Targets — the week's body", el: <AppTargetsScreen /> },
+          { tab: "Strength — the payoff", el: <AppStrengthScreen /> },
+        ].map((s) => (
+          <div key={s.tab} className="flex flex-col items-center">
+            {s.el}
+            <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-brand-300">
+              {s.tab}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-14 grid gap-5 md:grid-cols-2">
+        {ANNOTATIONS.map((a) => (
+          <div
+            key={a.title}
+            className="rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6"
+          >
+            <h2 className="text-sm font-semibold text-white">
+              <span className="mr-2 text-brand-400">{a.n}</span>
+              {a.title}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-400">{a.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
